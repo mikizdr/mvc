@@ -1,0 +1,6 @@
+# redirect every route that looks like /mvc/something... to /mvc/public/index.php
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^$ public/ [L]
+    RewriteRule (.*) public/$1 [L]
+</IfModule>

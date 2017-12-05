@@ -1,4 +1,4 @@
-
+# redirect every route that looks like /mvc/public/something... to /mvc/public/index.php
 <IfModule mod_rewrite.c>
 	Options -Multiviews
 	RewriteEngine On
