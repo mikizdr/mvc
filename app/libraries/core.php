@@ -6,7 +6,7 @@
 	 */
 	 class Core
 	 {
-		protected $currentController = 'Pages';
+		protected $currentController = 'PageController';
 		protected $currentMethod = 'index';
 		protected $params = [];
 
@@ -25,10 +25,27 @@
 			}
 
 			// Require the controller
-			require_once '../app/controllers/' . $this->currentController . '.php';
+			require_once '../app/controllers/' . $this->currentController  . '.php';
 
 			// Instantiate controller class
 			$this->currentController = new $this->currentController;
+
+			// Check for second part of url
+			if (isset($url[1])) {
+				// Check to see if method exists
+				if (method_exists($this->currentController, $url[1])) {					
+					# if extists set the curren method
+					$this->currentMethod = $url[1];
+					# Unset 1 index
+					unset($url[1]);
+				}
+			}
+
+			// Get params
+			$this->params = $url ? array_values($url) : [];
+
+			// Call a callback with array of params
+			call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
 		}
 
 		public function getUrl ()
